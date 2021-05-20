@@ -21,9 +21,10 @@ class QueryParam {
         break;
       case '+^': // add query parameter to start even if it already exists
         if (key in this.params) {
-          for (let i = this.params[key].length - 1; i !== 0; i--) {
-            this.params[key][i] = this.params[key][i + 1];
+          for (let i = this.params[key].length; i !== 0; i--) {
+            this.params[key][i] = this.params[key][i - 1];
           }
+          this.params[key][0] = value;
         } else {
           this.params[key] = [value];
         }

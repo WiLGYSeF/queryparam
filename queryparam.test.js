@@ -28,13 +28,21 @@ test('parameter_parsing', () => {
 test('modify', () => {
   const TESTS = [
     {
-      params: '?abc=123&def=&abc=a',
+      params: '?abc=123&def=g&abc=a',
       modifiers: [
-        ['+', 'abc', 'b']
+        ['+', 'abc', 'b'],
+        ['+', 'new', 'a'],
+        ['+$', 'def', 'last'],
+        ['+$', 'new_last', 'a'],
+        ['+^', 'def', 'first'],
+        ['+^', 'new_first', 'a'],
       ],
       result: {
         'abc': ['b'],
-        'def': ['']
+        'def': ['first', 'g', 'last'],
+        'new': ['a'],
+        'new_first': ['a'],
+        'new_last': ['a'],
       }
     },
   ];
