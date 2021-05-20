@@ -30,6 +30,16 @@ test('modify', () => {
     {
       params: '?abc=123&def=g&abc=a',
       modifiers: [
+        ['invalid', 'abc', 'b'],
+      ],
+      result: {
+        'abc': ['123', 'a'],
+        'def': ['g'],
+      }
+    },
+    {
+      params: '?abc=123&def=g&abc=a',
+      modifiers: [
         ['+', 'abc', 'b'],
         ['+', 'new', 'a'],
         ['+$', 'def', 'last'],
@@ -46,16 +56,60 @@ test('modify', () => {
       }
     },
     {
-      params: '?abc=123',
+      params: '?abc=123&def=a',
       modifiers: [
         ['+=', 'abc', undefined],
         ['+=', 'abc', '4'],
+        ['+=', 'abc', 'invalid'],
+        ['+=', 'def', undefined],
         ['+=', 'new', undefined],
         ['+=', 'new', '2'],
       ],
       result: {
         'abc': ['128'],
+        'def': ['a'],
         'new': ['3'],
+      }
+    },
+    {
+      params: '?abc=123&def=g&abc=a',
+      modifiers: [
+        ['-', 'abc', undefined],
+        ['-', 'new', undefined],
+      ],
+      result: {
+        'def': ['g'],
+      }
+    },
+    {
+      params: '?abc=123&def=g&abc=a&abc=end&ghi=j',
+      modifiers: [
+        ['-$', 'abc', undefined],
+        ['-$', 'def', undefined],
+        ['-$', 'new', undefined],
+        ['-^', 'abc', undefined],
+        ['-^', 'ghi', undefined],
+        ['-^', 'new', undefined],
+      ],
+      result: {
+        'abc': ['a'],
+      }
+    },
+    {
+      params: '?abc=123&def',
+      modifiers: [
+        ['-=', 'abc', undefined],
+        ['-=', 'abc', '4'],
+        ['-=', 'abc', 'invalid'],
+        ['-=', 'def', '2'],
+        ['-=', 'new', undefined],
+        ['-=', 'new', '2'],
+        ['-=', 'new', '-13'],
+      ],
+      result: {
+        'abc': ['118'],
+        'def': [undefined],
+        'new': ['10'],
       }
     },
   ];

@@ -1,3 +1,8 @@
+function toNum(x) {
+  const val = parseInt(x, 10);
+  return Number.isNaN(val) ? 0 : val;
+}
+
 class QueryParam {
   constructor(url) {
     this.params = {};
@@ -38,14 +43,11 @@ class QueryParam {
         break;
       case '+=': // increment parameter
       {
-        let incr = 1;
-        if (value !== undefined && !Number.isNaN(value)) {
-          incr = parseInt(value, 10);
-        }
-
+        const incr = value !== undefined ? toNum(value) : 1;
         if (key in this.params) {
           const paramVal = this.params[key][this.params[key].length - 1];
-          if (paramVal !== undefined && !Number.isNaN(paramVal)) {
+          /* eslint-disable-next-line no-restricted-globals */
+          if (paramVal !== undefined && !isNaN(paramVal)) {
             this.params[key] = [(parseInt(paramVal, 10) + incr).toString()];
           }
         } else {
@@ -53,6 +55,39 @@ class QueryParam {
         }
         break;
       }
+      case '-': // remove parameter
+        delete this.params[key];
+        break;
+      case '-^': // remove first parameter
+        if (key in this.params) {
+          if (this.params[key].length === 1) {
+            delete this.params[key];
+          } else {
+            this.params[key].splice(0, 1);
+          }
+        }
+        break;
+      case '-$':
+        if (key in this.params) {
+          if (this.params[key].length === 1) {
+            delete this.params[key];
+          } else {
+            this.params[key].pop();
+          }
+        }
+        break;
+      case '-=':
+        if (value !== undefined) {
+          if (value[0] === '-') {
+            this.modify('+=', key, value.slice(1));
+          } else {
+            /* eslint-disable-next-line prefer-template */
+            this.modify('+=', key, '-' + value);
+          }
+        } else {
+          this.modify('+=', key, '-1');
+        }
+        break;
       default:
         break;
     }
