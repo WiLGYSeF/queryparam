@@ -24,3 +24,26 @@ test('parameter_parsing', () => {
     expect(qp.params).toStrictEqual(value);
   }
 });
+
+test('modify', () => {
+  const TESTS = [
+    {
+      params: '?abc=123&def=&abc=a',
+      modifiers: [
+        ['+', 'abc', 'b']
+      ],
+      result: {
+        'abc': ['b'],
+        'def': ['']
+      }
+    },
+  ];
+
+  for (const entry of TESTS) {
+    const qp = new QueryParam(entry.params);
+    for (const mod of entry.modifiers) {
+      qp.modify(mod[0], mod[1], mod[2]);
+    }
+    expect(qp.params).toStrictEqual(entry.result);
+  }
+});
