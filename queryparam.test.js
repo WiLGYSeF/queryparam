@@ -175,15 +175,43 @@ test('convertHref', () => {
     },
     {
       location: {
-        search: '',
-        pathname: '',
+        search: '?page=2',
+        pathname: '/',
         hash: '',
       },
       hrefs: [
-        '',
+        '##+=page##',
+        '##+=page=5##',
+      ],
+      results: [
+        'http://localhost/?page=3',
+        'http://localhost/?page=7',
+      ],
+    },
+    {
+      location: {
+        search: '?first=1',
+        pathname: '/',
+        hash: 'header',
+      },
+      hrefs: [
+        '##-first##',
       ],
       results: [
         'http://localhost/',
+      ],
+    },
+    {
+      location: {
+        search: '?first=1',
+        pathname: '/',
+        hash: '#header',
+      },
+      hrefs: [
+        '##-first##h',
+      ],
+      results: [
+        'http://localhost/#header',
       ],
     },
   ];
