@@ -42,10 +42,10 @@ test('modify', () => {
       modifiers: [
         ['+', 'abc', 'b'],
         ['+', 'new', 'a'],
-        ['+$', 'def', 'last'],
-        ['+$', 'new_last', 'a'],
         ['+^', 'def', 'first'],
         ['+^', 'new_first', 'a'],
+        ['+$', 'def', 'last'],
+        ['+$', 'new_last', 'a'],
       ],
       result: {
         'abc': ['b'],
@@ -84,12 +84,12 @@ test('modify', () => {
     {
       params: '?abc=123&def=g&abc=a&abc=end&ghi=j',
       modifiers: [
-        ['-$', 'abc', undefined],
-        ['-$', 'def', undefined],
-        ['-$', 'new', undefined],
         ['-^', 'abc', undefined],
         ['-^', 'ghi', undefined],
         ['-^', 'new', undefined],
+        ['-$', 'abc', undefined],
+        ['-$', 'def', undefined],
+        ['-$', 'new', undefined],
       ],
       result: {
         'abc': ['a'],
