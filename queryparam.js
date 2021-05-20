@@ -164,16 +164,24 @@ class QueryParam {
 
       const [, hspecial, hmode] = match;
 
-      const qp = new QueryParam(
-        hmode.includes('r') ? '' : location.search,
-      );
+      const qp = new QueryParam(location.search);
 
       const regex = /&?([^A-Za-z0-9]+)([A-Za-z0-9\-._~]+)(?:=([^&]*))?/g;
+      const keyset = new Set();
       let m;
 
       /* eslint-disable-next-line no-cond-assign */
       while ((m = regex.exec(hspecial)) !== null) {
         qp.modify(m[1], m[2], m[3]);
+        keyset.add(m[2]);
+      }
+
+      if (hmode.includes('r')) {
+        for (const key of Object.keys(qp.params)) {
+          if (!keyset.has(key)) {
+            delete qp.params[key];
+          }
+        }
       }
 
       href = '?' + qp.toString();

@@ -175,7 +175,7 @@ test('convertHref', () => {
     },
     {
       location: {
-        search: '?page=2',
+        search: '?page=2&sort=title',
         pathname: '/',
         hash: '',
       },
@@ -184,8 +184,8 @@ test('convertHref', () => {
         '##+=page=5##',
       ],
       results: [
-        'http://localhost/?page=3',
-        'http://localhost/?page=7',
+        'http://localhost/?page=3&sort=title',
+        'http://localhost/?page=7&sort=title',
       ],
     },
     {
@@ -212,6 +212,19 @@ test('convertHref', () => {
       ],
       results: [
         'http://localhost/#header',
+      ],
+    },
+    {
+      location: {
+        search: '?page=1&sort=title',
+        pathname: '/',
+        hash: '',
+      },
+      hrefs: [
+        '##+=page##r',
+      ],
+      results: [
+        'http://localhost/?page=2',
       ],
     },
   ];
