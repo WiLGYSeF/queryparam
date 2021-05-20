@@ -1,21 +1,19 @@
-/* eslint-disable */
-
 const QueryParam = require('./queryparam');
 
 test('parameter_parsing', () => {
   const TESTS = {
     '': {},
-    'abc': {},
+    abc: {},
     '?abc': {
-      'abc': [undefined]
+      abc: [undefined],
     },
     '?abc=123&def=': {
-      'abc': ['123'],
-      'def': ['']
+      abc: ['123'],
+      def: [''],
     },
     '?abc=123&def=&abc=a': {
-      'abc': ['123', 'a'],
-      'def': ['']
+      abc: ['123', 'a'],
+      def: [''],
     },
   };
 
@@ -33,9 +31,9 @@ test('modify', () => {
         ['invalid', 'abc', 'b'],
       ],
       result: {
-        'abc': ['123', 'a'],
-        'def': ['g'],
-      }
+        abc: ['123', 'a'],
+        def: ['g'],
+      },
     },
     {
       params: '?abc=123&def=g&abc=a',
@@ -48,12 +46,12 @@ test('modify', () => {
         ['+$', 'new_last', 'a'],
       ],
       result: {
-        'abc': ['b'],
-        'def': ['first', 'g', 'last'],
-        'new': ['a'],
-        'new_first': ['a'],
-        'new_last': ['a'],
-      }
+        abc: ['b'],
+        def: ['first', 'g', 'last'],
+        new: ['a'],
+        new_first: ['a'],
+        new_last: ['a'],
+      },
     },
     {
       params: '?abc=123&def=a',
@@ -66,10 +64,10 @@ test('modify', () => {
         ['+=', 'new', '2'],
       ],
       result: {
-        'abc': ['128'],
-        'def': ['a'],
-        'new': ['3'],
-      }
+        abc: ['128'],
+        def: ['a'],
+        new: ['3'],
+      },
     },
     {
       params: '?abc=123&def=g&abc=a',
@@ -78,8 +76,8 @@ test('modify', () => {
         ['-', 'new', undefined],
       ],
       result: {
-        'def': ['g'],
-      }
+        def: ['g'],
+      },
     },
     {
       params: '?abc=123&def=g&abc=a&abc=end&ghi=j',
@@ -92,8 +90,8 @@ test('modify', () => {
         ['-$', 'new', undefined],
       ],
       result: {
-        'abc': ['a'],
-      }
+        abc: ['a'],
+      },
     },
     {
       params: '?abc=123&def',
@@ -107,10 +105,10 @@ test('modify', () => {
         ['-=', 'new', '-13'],
       ],
       result: {
-        'abc': ['118'],
-        'def': [undefined],
-        'new': ['10'],
-      }
+        abc: ['118'],
+        def: [undefined],
+        new: ['10'],
+      },
     },
     {
       params: '?abc=123&def=g&abc=a&def=gg&123=a&123=b',
@@ -123,10 +121,10 @@ test('modify', () => {
         ['=$', 'new', undefined],
       ],
       result: {
-        'abc': ['123'],
-        'def': ['h'],
-        '123': ['b'],
-      }
+        abc: ['123'],
+        def: ['h'],
+        123: ['b'],
+      },
     },
   ];
 

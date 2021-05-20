@@ -1,8 +1,7 @@
 module.exports = {
   env: {
-    browser: true,
+    jest: true,
     es2021: true,
-    node: true,
   },
   extends: [
     'airbnb-base',
@@ -11,15 +10,11 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: 'module',
   },
-  globals: {
-    browser: true,
-    chrome: true,
-    cloneInto: true,
-    exportFunction: true,
-  },
+  globals: {},
   plugins: [],
   rules: {
     'no-continue': 'off',
     'no-plusplus': 'off',
+    'no-restricted-syntax': 0,
   },
 };
