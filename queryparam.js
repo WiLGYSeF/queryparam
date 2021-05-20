@@ -81,7 +81,6 @@ class QueryParam {
           if (value[0] === '-') {
             this.modify('+=', key, value.slice(1));
           } else {
-            /* eslint-disable-next-line prefer-template */
             this.modify('+=', key, '-' + value);
           }
         } else {
@@ -107,6 +106,49 @@ class QueryParam {
         break;
     }
   }
+
+  join(keep = QueryParam.JOIN_ALL) {
+    let query = '';
+
+    const entries = Object.entries(this.params);
+    for (let idx = 0; idx < entries.length; idx++) {
+      const [key, value] = entries[idx];
+      switch (keep) {
+        case QueryParam.JOIN_ALL:
+        default:
+          for (let i = 0; i < value.length; i++) {
+            query += key;
+            if (value[i] !== undefined) {
+              query += '=' + value[i];
+            }
+
+            if (i !== value.length - 1) {
+              query += '&';
+            }
+          }
+          break;
+        case QueryParam.JOIN_FIRST:
+          query += value[0];
+          break;
+        case QueryParam.JOIN_LAST:
+          query += value[value.length - 1];
+      }
+
+      if (idx !== entries.length - 1) {
+        query += '&';
+      }
+    }
+
+    return query;
+  }
+
+  toString() {
+    return this.join(QueryParam.JOIN_ALL);
+  }
 }
+
+QueryParam.JOIN_ALL = 'join-all';
+QueryParam.JOIN_FIRST = 'join-first';
+QueryParam.JOIN_LAST = 'join-last';
 
 module.exports = QueryParam;

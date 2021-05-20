@@ -136,3 +136,22 @@ test('modify', () => {
     expect(qp.params).toStrictEqual(entry.result);
   }
 });
+
+test('tostring', () => {
+  const TESTS = [
+    {
+      params: {
+        abc: ['123', '456'],
+        def: ['abc'],
+        ghi: [undefined],
+      },
+      result: 'abc=123&abc=456&def=abc&ghi',
+    },
+  ];
+
+  for (const entry of TESTS) {
+    const qp = new QueryParam();
+    qp.params = entry.params;
+    expect(qp.toString()).toStrictEqual(entry.result);
+  }
+});
