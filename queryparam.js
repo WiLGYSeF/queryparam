@@ -6,13 +6,15 @@ class QueryParam {
       return;
     }
 
-    const matches = url.matchAll(/[?&]+([^=&]+)(?:=([^&]*))?/g);
-    for (let i = 0; i < matches.length; i++) {
-      const m = matches[i];
-      if (m[1] in this.params && !this.unique) {
-        this.params[m[1]].push(m[2]);
+    const regex = /[?&]+([^=&]+)(?:=([^&]*))?/g;
+    let match;
+
+    /* eslint-disable-next-line no-cond-assign */
+    while ((match = regex.exec(url)) !== null) {
+      if (match[1] in this.params && !this.unique) {
+        this.params[match[1]].push(match[2]);
       } else {
-        this.params[m[1]] = [m[2]];
+        this.params[match[1]] = [match[2]];
       }
     }
   }
@@ -43,3 +45,5 @@ class QueryParam {
     }
   }
 }
+
+module.exports = QueryParam;
