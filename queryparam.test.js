@@ -45,6 +45,19 @@ test('modify', () => {
         'new_last': ['a'],
       }
     },
+    {
+      params: '?abc=123',
+      modifiers: [
+        ['+=', 'abc', undefined],
+        ['+=', 'abc', '4'],
+        ['+=', 'new', undefined],
+        ['+=', 'new', '2'],
+      ],
+      result: {
+        'abc': ['128'],
+        'new': ['3'],
+      }
+    },
   ];
 
   for (const entry of TESTS) {
