@@ -155,3 +155,52 @@ test('tostring', () => {
     expect(qp.toString()).toStrictEqual(entry.result);
   }
 });
+
+test('convertHref', () => {
+  const TESTS = [
+    {
+      location: {
+        search: '',
+        pathname: '/',
+        hash: '',
+      },
+      hrefs: [
+        '##+abc=123##',
+        '##+def=456&+ghi=789##',
+      ],
+      results: [
+        'http://localhost/?abc=123',
+        'http://localhost/?def=456&ghi=789',
+      ],
+    },
+    {
+      location: {
+        search: '',
+        pathname: '',
+        hash: '',
+      },
+      hrefs: [
+        '',
+      ],
+      results: [
+        'http://localhost/',
+      ],
+    },
+  ];
+
+  for (const entry of TESTS) {
+    const eleContainer = document.createElement('div');
+    for (const href of entry.hrefs) {
+      const eleA = document.createElement('a');
+      eleA.href = href;
+      eleContainer.appendChild(eleA);
+    }
+
+    QueryParam.convertHrefs(eleContainer, entry.location);
+
+    let idx = 0;
+    for (const eleA of eleContainer.getElementsByTagName('a')) {
+      expect(eleA.href).toStrictEqual(entry.results[idx++]);
+    }
+  }
+});

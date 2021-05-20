@@ -145,6 +145,49 @@ class QueryParam {
   toString() {
     return this.join(QueryParam.JOIN_ALL);
   }
+
+  static convertHrefs(root = document, location = window.location) {
+    for (const eleA of root.getElementsByTagName('a')) {
+      if (eleA.classList.contains('noquery')) {
+        continue;
+      }
+
+      let href = eleA.getAttribute('href');
+      if (href === null) {
+        continue;
+      }
+
+      const match = href.match(/^##(.*)##([a-z]*)$/);
+      if (match === null) {
+        continue;
+      }
+
+      const [, hspecial, hmode] = match;
+
+      const qp = new QueryParam(
+        hmode.includes('r') ? '' : location.search,
+      );
+
+      const regex = /&?([^A-Za-z0-9]+)([A-Za-z0-9\-._~]+)(?:=([^&]*))?/g;
+      let m;
+
+      /* eslint-disable-next-line no-cond-assign */
+      while ((m = regex.exec(hspecial)) !== null) {
+        qp.modify(m[1], m[2], m[3]);
+      }
+
+      href = '?' + qp.toString();
+      if (href.length === 1) {
+        href = location.pathname;
+      }
+
+      if (hmode.includes('h')) {
+        href += location.hash;
+      }
+
+      eleA.href = href;
+    }
+  }
 }
 
 QueryParam.JOIN_ALL = 'join-all';
