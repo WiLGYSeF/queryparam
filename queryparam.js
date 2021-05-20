@@ -2,20 +2,15 @@ class QueryParam {
   constructor(url) {
     this.params = {};
 
-    if (url === undefined) {
-      return;
-    }
-
     const regex = /[?&]+([^=&]+)(?:=([^&]*))?/g;
     let match;
 
     /* eslint-disable-next-line no-cond-assign */
     while ((match = regex.exec(url)) !== null) {
-      if (match[1] in this.params && !this.unique) {
-        this.params[match[1]].push(match[2]);
-      } else {
-        this.params[match[1]] = [match[2]];
+      if (!(match[1] in this.params)) {
+        this.params[match[1]] = [];
       }
+      this.params[match[1]].push(match[2]);
     }
   }
 

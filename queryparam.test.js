@@ -8,7 +8,15 @@ test('parameter_parsing', () => {
     'abc': {},
     '?abc': {
       'abc': [undefined]
-    }
+    },
+    '?abc=123&def=': {
+      'abc': ['123'],
+      'def': ['']
+    },
+    '?abc=123&def=&abc=a': {
+      'abc': ['123', 'a'],
+      'def': ['']
+    },
   };
 
   for (const [key, value] of Object.entries(TESTS)) {
