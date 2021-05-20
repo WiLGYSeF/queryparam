@@ -112,6 +112,22 @@ test('modify', () => {
         'new': ['10'],
       }
     },
+    {
+      params: '?abc=123&def=g&abc=a&def=gg&123=a&123=b',
+      modifiers: [
+        ['=', 'def', 'h'],
+        ['=', 'new', 'a'],
+        ['=^', 'abc', undefined],
+        ['=^', 'new', undefined],
+        ['=$', '123', undefined],
+        ['=$', 'new', undefined],
+      ],
+      result: {
+        'abc': ['123'],
+        'def': ['h'],
+        '123': ['b'],
+      }
+    },
   ];
 
   for (const entry of TESTS) {

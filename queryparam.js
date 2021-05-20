@@ -67,7 +67,7 @@ class QueryParam {
           }
         }
         break;
-      case '-$':
+      case '-$': // remove last parameter
         if (key in this.params) {
           if (this.params[key].length === 1) {
             delete this.params[key];
@@ -76,7 +76,7 @@ class QueryParam {
           }
         }
         break;
-      case '-=':
+      case '-=': // decrement parameter
         if (value !== undefined) {
           if (value[0] === '-') {
             this.modify('+=', key, value.slice(1));
@@ -86,6 +86,21 @@ class QueryParam {
           }
         } else {
           this.modify('+=', key, '-1');
+        }
+        break;
+      case '=': // set parameter if exists
+        if (key in this.params) {
+          this.params[key] = [value];
+        }
+        break;
+      case '=^': // keep first parameter
+        if (key in this.params) {
+          this.params[key] = [this.params[key][0]];
+        }
+        break;
+      case '=$': // keep last parameter
+        if (key in this.params) {
+          this.params[key] = [this.params[key].pop()];
         }
         break;
       default:
