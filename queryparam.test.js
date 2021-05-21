@@ -184,7 +184,6 @@ test('convertHref', () => {
     {
       location: {
         search: '',
-        pathname: '/',
         hash: '',
       },
       hrefs: [
@@ -199,7 +198,6 @@ test('convertHref', () => {
     {
       location: {
         search: '?page=2&sort=title',
-        pathname: '/',
         hash: '',
       },
       hrefs: [
@@ -214,7 +212,6 @@ test('convertHref', () => {
     {
       location: {
         search: '?first=1',
-        pathname: '/',
         hash: 'header',
       },
       hrefs: [
@@ -227,7 +224,6 @@ test('convertHref', () => {
     {
       location: {
         search: '?first=1',
-        pathname: '/',
         hash: '#header',
       },
       hrefs: [
@@ -240,7 +236,6 @@ test('convertHref', () => {
     {
       location: {
         search: '?page=1&sort=title',
-        pathname: '/',
         hash: '',
       },
       hrefs: [
@@ -253,7 +248,6 @@ test('convertHref', () => {
     {
       location: {
         search: '?page=1&sort=title',
-        pathname: '/',
         hash: '',
       },
       hrefs: [
@@ -268,7 +262,6 @@ test('convertHref', () => {
     {
       location: {
         search: '?page=1&sort=title',
-        pathname: '/',
         hash: '',
       },
       classList: 'noquery',

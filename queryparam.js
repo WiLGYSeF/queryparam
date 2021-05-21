@@ -178,7 +178,7 @@ class QueryParam {
 
       href = '?' + qp.toString();
       if (href.length === 1) {
-        href = location.pathname;
+        href = '';
       }
 
       if (hmode.includes('h')) {
