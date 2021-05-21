@@ -137,7 +137,7 @@ test('modify', () => {
   }
 });
 
-test('tostring', () => {
+test('join_and_toString', () => {
   const TESTS = [
     {
       params: {
@@ -145,14 +145,37 @@ test('tostring', () => {
         def: ['abc'],
         ghi: [undefined],
       },
+      keep: QueryParam.JOIN_ALL,
       result: 'abc=123&abc=456&def=abc&ghi',
+    },
+    {
+      params: {
+        abc: ['123', '456'],
+        def: ['abc'],
+        ghi: [undefined],
+      },
+      keep: QueryParam.JOIN_FIRST,
+      result: 'abc=123&def=abc&ghi',
+    },
+    {
+      params: {
+        abc: ['123', '456'],
+        def: ['abc'],
+        ghi: [undefined],
+      },
+      keep: QueryParam.JOIN_LAST,
+      result: 'abc=456&def=abc&ghi',
     },
   ];
 
   for (const entry of TESTS) {
     const qp = new QueryParam();
     qp.params = entry.params;
-    expect(qp.toString()).toStrictEqual(entry.result);
+
+    expect(qp.join(entry.keep)).toStrictEqual(entry.result);
+    if (entry.keep === QueryParam.JOIN_ALL) {
+      expect(qp.toString()).toStrictEqual(entry.result);
+    }
   }
 });
 

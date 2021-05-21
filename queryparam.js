@@ -128,10 +128,17 @@ class QueryParam {
           }
           break;
         case QueryParam.JOIN_FIRST:
-          query += value[0];
+          query += key;
+          if (value[0] !== undefined) {
+            query += '=' + value[0];
+          }
           break;
         case QueryParam.JOIN_LAST:
-          query += value[value.length - 1];
+          query += key;
+          if (value[value.length - 1] !== undefined) {
+            query += '=' + value[value.length - 1];
+          }
+          break;
       }
 
       if (idx !== entries.length - 1) {
