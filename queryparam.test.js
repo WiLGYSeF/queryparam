@@ -265,12 +265,29 @@ test('convertHref', () => {
         '',
       ],
     },
+    {
+      location: {
+        search: '?page=1&sort=title',
+        pathname: '/',
+        hash: '',
+      },
+      classList: 'noquery',
+      hrefs: [
+        '##+=page##r',
+      ],
+      results: [
+        'http://localhost/##+=page##r',
+      ],
+    },
   ];
 
   for (const entry of TESTS) {
     const eleContainer = document.createElement('div');
     for (const href of entry.hrefs) {
       const eleA = document.createElement('a');
+      if ('classList' in entry) {
+        eleA.classList = entry.classList;
+      }
       if (href !== undefined) {
         eleA.href = href;
       }
