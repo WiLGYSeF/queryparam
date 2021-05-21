@@ -250,13 +250,30 @@ test('convertHref', () => {
         'http://localhost/?page=2',
       ],
     },
+    {
+      location: {
+        search: '?page=1&sort=title',
+        pathname: '/',
+        hash: '',
+      },
+      hrefs: [
+        '/test',
+        undefined,
+      ],
+      results: [
+        'http://localhost/test',
+        '',
+      ],
+    },
   ];
 
   for (const entry of TESTS) {
     const eleContainer = document.createElement('div');
     for (const href of entry.hrefs) {
       const eleA = document.createElement('a');
-      eleA.href = href;
+      if (href !== undefined) {
+        eleA.href = href;
+      }
       eleContainer.appendChild(eleA);
     }
 
