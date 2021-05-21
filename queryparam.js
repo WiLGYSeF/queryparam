@@ -113,32 +113,17 @@ class QueryParam {
     const entries = Object.entries(this.params);
     for (let idx = 0; idx < entries.length; idx++) {
       const [key, value] = entries[idx];
-      switch (keep) {
-        case QueryParam.JOIN_ALL:
-        default:
-          for (let i = 0; i < value.length; i++) {
-            query += key;
-            if (value[i] !== undefined) {
-              query += '=' + value[i];
-            }
+      const length = keep === QueryParam.JOIN_FIRST ? 1 : value.length;
 
-            if (i !== value.length - 1) {
-              query += '&';
-            }
-          }
-          break;
-        case QueryParam.JOIN_FIRST:
-          query += key;
-          if (value[0] !== undefined) {
-            query += '=' + value[0];
-          }
-          break;
-        case QueryParam.JOIN_LAST:
-          query += key;
-          if (value[value.length - 1] !== undefined) {
-            query += '=' + value[value.length - 1];
-          }
-          break;
+      for (let i = keep === QueryParam.JOIN_LAST ? length - 1 : 0; i < length; i++) {
+        query += key;
+        if (value[i] !== undefined) {
+          query += '=' + value[i];
+        }
+
+        if (i !== length - 1) {
+          query += '&';
+        }
       }
 
       if (idx !== entries.length - 1) {
