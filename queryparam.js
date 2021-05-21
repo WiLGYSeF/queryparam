@@ -194,4 +194,6 @@ QueryParam.JOIN_ALL = 'join-all';
 QueryParam.JOIN_FIRST = 'join-first';
 QueryParam.JOIN_LAST = 'join-last';
 
-module.exports = QueryParam;
+if (typeof module !== typeof undefined) {
+  module.exports = QueryParam;
+}
