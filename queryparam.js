@@ -21,10 +21,10 @@ class QueryParam {
 
   modify(mode, key, value) {
     switch (mode) {
-      case '+': // add query parameter, override value if it exists
+      case '+': // add parameter, overwrite value if it exists
         this.params[key] = [value];
         break;
-      case '+^': // add parameter to start even if it already exists
+      case '+^': // add parameter to the beginning even if it exists
         if (key in this.params) {
           for (let i = this.params[key].length; i !== 0; i--) {
             this.params[key][i] = this.params[key][i - 1];
@@ -34,7 +34,7 @@ class QueryParam {
           this.params[key] = [value];
         }
         break;
-      case '+$': // add parameter to end even if it already exists
+      case '+$': // add parameter to the end even if it already exists
         if (key in this.params) {
           this.params[key].push(value);
         } else {
@@ -55,10 +55,10 @@ class QueryParam {
         }
         break;
       }
-      case '-': // remove parameter
+      case '-': // remove all parameters with specified key
         delete this.params[key];
         break;
-      case '-^': // remove first parameter
+      case '-^': // remove first parameter with specified key
         if (key in this.params) {
           if (this.params[key].length === 1) {
             delete this.params[key];
@@ -67,7 +67,7 @@ class QueryParam {
           }
         }
         break;
-      case '-$': // remove last parameter
+      case '-$': // remove last parameter with specified key
         if (key in this.params) {
           if (this.params[key].length === 1) {
             delete this.params[key];
@@ -87,17 +87,17 @@ class QueryParam {
           this.modify('+=', key, '-1');
         }
         break;
-      case '=': // set parameter if exists
+      case '=': // set parameter to value only if it exists
         if (key in this.params) {
           this.params[key] = [value];
         }
         break;
-      case '=^': // keep first parameter
+      case '=^': // keep only first parameter with specified key
         if (key in this.params) {
           this.params[key] = [this.params[key][0]];
         }
         break;
-      case '=$': // keep last parameter
+      case '=$': // keep only last parameter with specified key
         if (key in this.params) {
           this.params[key] = [this.params[key].pop()];
         }

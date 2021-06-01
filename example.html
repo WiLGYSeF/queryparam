@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<style>
+			a {
+				display: block
+			}
+		</style>
+	</head>
+	<body>
+		<div>
+			<span>Status:</span>
+			<span id="status"></span>
+		</div>
+
+		<div class="links">
+			<a href="##+page=3##">Page 3</a>
+			<a href="##+sort=title##">Sort by title</a>
+			<a href="##+=page##">Next Page</a>
+			<a href="##+$filter=apple##">Filter apples</a>
+			<a href="##+$filter=banana##">Filter bananas</a>
+			<a href="##-sort##">Default sorting</a>
+		</div>
+
+		<script src="queryparam.js"></script>
+		<script>
+			document.addEventListener("DOMContentLoaded", () => {
+				var qp = new QueryParam(location.search);
+
+				var status = document.getElementById('status');
+				status.innerHTML =
+					`You are on page ${qp.params.page ? qp.params.page[0] : '1'}` +
+					` sorting by ${qp.params.sort ? qp.params.sort[0] : 'default'}` +
+					` and filtering by ${qp.params.filter ? qp.params.filter.join(', ') : 'nothing'}`;
+
+				QueryParam.convertHrefs();
+			});
+		</script>
+	</body>
+</html>
