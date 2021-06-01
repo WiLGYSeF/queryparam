@@ -1,4 +1,6 @@
 # QueryParam
+[![Build Status](https://www.travis-ci.com/WiLGYSeF/queryparam.svg?branch=master)](https://www.travis-ci.com/WiLGYSeF/queryparam)
+[![codecov](https://codecov.io/gh/WiLGYSeF/queryparam/branch/master/graph/badge.svg?token=8GR4O7YEZK)](https://codecov.io/gh/WiLGYSeF/queryparam)
 
 A simple library for handling URL query parameters in links.
 
